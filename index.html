@@ -1,3 +1,60 @@
-hello world
-hey gang 
-what do you want to eat?  chicken ok
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RCS</title>
+    <!-- Firebase App and Realtime Database SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-database.js"></script>
+
+    <!-- Your web app's Firebase configuration -->
+    <!-- For Firebase JS SDK v7.20.0 and later, measurementId is optional -->
+    const firebaseConfig = {
+    apiKey: "AIzaSyBHfz0K4tbOD3APaFHilvbavKE0Umec3qg",
+    authDomain: "delme-temp-temp.firebaseapp.com",
+    databaseURL: "https://delme-temp-temp-default-rtdb.firebaseio.com",
+    projectId: "delme-temp-temp",
+    storageBucket: "delme-temp-temp.firebasestorage.app",
+    messagingSenderId: "550084636339",
+    appId: "1:550084636339:web:92788f059ad80476dccac6",
+    measurementId: "G-Y5EWX4D2LW"
+    };
+
+    <script>
+        <!-- Initialize Firebase -->
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+    </script>
+
+</head>
+
+<body>
+
+    <form id="contactForm">
+        <input type="text" id="name" placeholder="Your name" required>
+        <input type="email" id="email" placeholder="Your email" required>
+        <button type="submit">Send</button>
+    </form>
+
+    <script>
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+
+        // Write data to Firebase
+        firebase.database().ref('submissions').push({
+        name: name,
+        email: email,
+        timestamp: Date.now()
+        }).then(() => {
+        alert('Form submitted successfully!');
+        }).catch((error) => {
+        alert('Error: ' + error.message);
+        });
+    });
+    </script>
+
+</body>
+</html>
