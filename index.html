@@ -3,58 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <title>RCS</title>
-    <!-- Firebase App and Realtime Database SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-database.js"></script>
 
-    <script>
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    const firebaseConfig = {
-    apiKey: "AIzaSyBHfz0K4tbOD3APaFHilvbavKE0Umec3qg",
-    authDomain: "delme-temp-temp.firebaseapp.com",
-    databaseURL: "https://delme-temp-temp-default-rtdb.firebaseio.com",
-    projectId: "delme-temp-temp",
-    storageBucket: "delme-temp-temp.firebasestorage.app",
-    messagingSenderId: "550084636339",
-    appId: "1:550084636339:web:92788f059ad80476dccac6",
-    measurementId: "G-Y5EWX4D2LW"
-    };
+    <!-- Firebase SDKs -->
+    <script type="module">
+        // Import Firebase functions from CDN
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+        import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-database.js";
 
-    <!-- Initialize Firebase -->
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBHfz0K4tbOD3APaFHilvbavKE0Umec3qg",
+            authDomain: "delme-temp-temp.firebaseapp.com",
+            databaseURL: "https://delme-temp-temp-default-rtdb.firebaseio.com",
+            projectId: "delme-temp-temp",
+            storageBucket: "delme-temp-temp.appspot.com",
+            messagingSenderId: "550084636339",
+            appId: "1:550084636339:web:92788f059ad80476dccac6",
+            measurementId: "G-Y5EWX4D2LW"
+        };
+
+        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-    </script>
+        const database = getDatabase(app);
 
+        // Wait until DOM is ready
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+
+                // Write to database
+                push(ref(database, 'submissions'), {
+                    name: name,
+                    email: email,
+                    timestamp: Date.now()
+                })
+                .then(() => {
+                    alert('Form submitted successfully!');
+                })
+                .catch((error) => {
+                    alert('Error: ' + error.message);
+                });
+            });
+        });
+    </script>
 </head>
 
 <body>
-
     <form id="contactForm">
         <input type="text" id="name" placeholder="Your name" required>
         <input type="email" id="email" placeholder="Your email" required>
         <button type="submit">Send</button>
     </form>
-
-    <script>
-    document.getElementById('contactForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-
-        // Write data to Firebase
-        firebase.database().ref('submissions').push({
-        name: name,
-        email: email,
-        timestamp: Date.now()
-        }).then(() => {
-        alert('Form submitted successfully!');
-        }).catch((error) => {
-        alert('Error: ' + error.message);
-        });
-    });
-    </script>
-
 </body>
 </html>
