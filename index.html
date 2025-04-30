@@ -1,13 +1,38 @@
-<link rel="stylesheet" href="https://codemirror.net/lib/codemirror.css">
-<script src="https://codemirror.net/lib/codemirror.js"></script>
-<script src="https://codemirror.net/keymap/vim.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vim Mode Editor</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/keymap/vim.min.css">
+  <style>
+    #editor-container {
+      height: 400px;
+      border: 1px solid #ccc;
+    }
+    .CodeMirror {
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
 
-<textarea id="vimEditor"></textarea>
+  <h2>Vim-Enabled Editor (No Textarea)</h2>
+  <div id="editor-container"></div>
 
-<script>
-  const editor = CodeMirror.fromTextArea(document.getElementById("vimEditor"), {
-    lineNumbers: true,
-    keyMap: "vim",
-    mode: "text/plain"
-  });
-</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/keymap/vim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/javascript/javascript.min.js"></script>
+
+  <script>
+    const editor = CodeMirror(document.getElementById('editor-container'), {
+      value: "// Start coding with Vim keybindings here\nfunction hello() {\n  console.log('Hello, Vim!');\n}",
+      mode: "javascript",
+      lineNumbers: true,
+      keyMap: "vim",
+      theme: "default"
+    });
+  </script>
+
+</body>
+</html>
